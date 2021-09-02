@@ -39,14 +39,13 @@ const displayBook = books => {
         errors.innerText = 'No result Found'
     }
     else{
-        errors.innerText = ""
-    }
+  bookContainer.innerHTML =`<h3>Result: ${books.length}</h3>`
    books.forEach(book =>{
         console.log(book)
         const div = document.createElement('div');
         div.classList.add('col-md-3');
         const{title,author_name,first_publish_year,publisher} = book
-        const notFound = Not-Found;
+        const notFound = "Not-Found";
         div.innerHTML = `
         <div class="rounded overflow-hidden border p-2">
       <img
@@ -74,4 +73,5 @@ const displayBook = books => {
   `
   bookContainer.appendChild(div)
     })
+  }
 }
