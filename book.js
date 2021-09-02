@@ -17,8 +17,10 @@ const spinner = document.getElementById('spinner');
     else {
         document.getElementById('countResult').innerText = `Search fild cannot be empty`;
         document.getElementById('displayField').textContent = ''
+
     }
     inputValue.value = ''
+    
 }
 
 // This Function Show Data in UI
@@ -28,7 +30,7 @@ const displayData = (books, totalDataFound) => {
     const countResult = document.getElementById('countResult')
 
     // it will validate data caount
-    if (totalDataFound === 0) {
+    if (totalDataFound == 0) {
         countResult.innerText = 'No Result Found'
     }
     else {
