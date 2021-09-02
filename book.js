@@ -35,16 +35,18 @@ function loadBook(){
 
 const displayBook = books => {
     // error handalling 
-    // if(books == 404){
-    //     errors.innerText = 'No result Found'
-    // }
-    // else{
-    //     errors.innerText = ''
-    // }
+    if(books.offset == null){
+        errors.innerText = 'No result Found'
+    }
+    else{
+        errors.innerText = ""
+    }
    books.forEach(book =>{
         console.log(book)
         const div = document.createElement('div');
         div.classList.add('col-md-3');
+        const{title,author_name,first_publish_year,publisher} = book
+        const notFound = Not-Found;
         div.innerHTML = `
         <div class="rounded overflow-hidden border p-2">
       <img
@@ -64,10 +66,10 @@ const displayBook = books => {
         text-md-center
       "
     >
-      <h5>Book-name: <span class="text-info">${book.title}</span></h5>
-      <p>Author-name: <span class="text-info">${book.author_name[0]}</span> </p>
-      <h5>Publish-year: <span class="text-info">${book.first_publish_year}</span></h5>
-      <p>Publisher: <span class="text-info">${book.publisher}</span></p>
+      <h5>Book-name: <span class="text-info">${title?title:notFound}</span></h5>
+      <p>Author-name: <span class="text-info">${author_name?author_name:notFound}</span> </p>
+      <h5>Publish-year: <span class="text-info">${first_publish_year?first_publish_year:notFound}</span></h5>
+      <p>Publisher: <span class="text-info">${publisher?publisher:notFound}</span></p>
     </div>
   `
   bookContainer.appendChild(div)
