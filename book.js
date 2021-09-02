@@ -37,7 +37,7 @@ const displayBook = books => {
         div.innerHTML = `
         <div class="rounded overflow-hidden border p-2">
       <img
-        src="${book.cover_i}"
+        src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg"
         class="w-100"
         alt=""
       />
