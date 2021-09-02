@@ -4,6 +4,8 @@ const searchInput = document.getElementById('searchInput')
 const searchBtn = document.getElementById('search-btn')
 // error handalling
 const errors = document.getElementById('error');
+// spinner
+const spinner = document.getElementById('spinner');
 // book container 
 const bookContainer = document.getElementById('book-container')
 
@@ -12,14 +14,23 @@ searchBtn.addEventListener('click',loadBook)
 
 function loadBook(){
     const searchText = searchInput.value;
+    // errors handal empty search Input 
+    if(searchText === ""){
+      errors.innerText = "Search fild cannot be empty"
+      return;
+    }
+    else{
+      errors.textContent = '';
+    }
     // clear 
     searchInput.value = '';
     bookContainer.textContent = '';
 
-    
+    spinner.classList.remove('d-none')
     fetch(`https://openlibrary.org/search.json?q=${searchText}`)
     .then(res => res.json())
     .then(data => displayBook(data.docs))
+    .finally(() => spinner.classList.add('d-none'))
 }
 
 const displayBook = books => {

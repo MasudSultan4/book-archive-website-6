@@ -32,13 +32,21 @@
         />
         <button class="btn btn-dark" id="search-btn">Search</button>
       </div>
+      <hr />
     </section>
-    <!-- error handalling -->
+
     <section class="container">
-      <div id="error"></div>
-    </section>
-    <!-- book container  -->
-    <section class="container">
+      <!-- error handalling -->
+      <div id="error" class="text-warning"></div>
+
+      <!-- Spinner -->
+      <div class="text-center">
+        <div id="spinner" class="spinner-border d-none" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <!-- book container  -->
       <div id="book-container" class="row"></div>
     </section>
     <script src="book.js"></script>
