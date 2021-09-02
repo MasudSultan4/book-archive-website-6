@@ -1,87 +1,93 @@
+// search btn 
+const searchBtn = document.getElementById('search-btn')
 
-// Load Api 
-const loadBooksApi = () => {
+// spinner
+const spinner = document.getElementById('spinner');
+// book container 
+const bookContainer = document.getElementById('book-container')
 
+searchBtn.addEventListener('click',loadBook)
+
+
+function loadBook(){
     const errorDiv = document.getElementById("error");
     errorDiv.innerHTML = "";
     const searchTextInput = document.getElementById("search-text");
     const searchText = searchTextInput.value;
 
-    if (searchText == "") {
-        errorDiv.innerHTML = `<p class="text-center fw-bold">Search Field Cannot be Empty</p>
+    // Handale empty search 
+    if (searchText == 0) {
+        errorDiv.innerHTML = `<h4 class="text-center">Search Field Cannot be Empty</h4>
         `;
     }
     else {
-        const url = `https://openlibrary.org/search.json?q=${searchText}`;
-        fetch(url)
-            .then(res => res.json())
-            .then(data => displayBook(data))
+        spinner.classList.remove('d-none')
+        fetch(`https://openlibrary.org/search.json?q=${searchText}`)
+        .then(res => res.json())
+        .then(data => displayBook(data.docs))
+        .finally(() => spinner.classList.add('d-none'))
     }
 
     searchTextInput.value = "";
 }
 
-
 // Show Result 
 const showResult = data => {
 
-    const searchResultField = document.getElementById("show-search-result");
-    searchResultField.innerHTML = '';
+  const searchResultDiv = document.getElementById("error");
+  searchResultDiv.innerHTML = '';
 
 
-    if (data > 0) {
-        searchResultField.innerHTML =` <h4 class="text-center">Search Result :
-        ${data} items </h4>`
-    }
-    else {
-        searchResultField.innerHTML =  `<h4 class="text-center text-danger ">No Items Found </h4>`
-    }
+  if (data > 0) {
+      searchResultDiv.innerHTML = ` <h2>Search Result : ${data.length} items </h2>`
+  }
+  else {
+      searchResultDiv.innerHTML = ` <h3>No Items Found </h3>`
+  }
 }
 
 
-// Display Book in Dom 
+
 
 const displayBook = data => {
 
+  // Serch Item Result Here
+  showResult(data.docs)
 
+   data.forEach(book =>{
+        console.log(book)
+        const{title,author_name,first_publish_year,publisher} = book;
 
-    // Serch Item Result Here
-    showResult(data.docs.length)
-
-
-    const booksContainer = document.getElementById("book-container");
-    booksContainer.innerHTML = "";
-
-    data.docs.forEach(book => {
-
-        // Distructring The book object 
-        const { title, author_name, first_publish_year, publisher, cover_i } = book;
-        const unknown = "Unknown Author";
-
-        // Getting image , Author Name for single Book
-        const bookImgUrl = `https://covers.openlibrary.org/b/id/${cover_i}-M.jpg`;
-
-        // const author = book?.author_name[0];
-
-        // Create single book Div 
-        const booksDiv = document.createElement('div');
-        booksDiv.classList.add("col")
-        booksDiv.innerHTML = `
+        const notFound = "Not-Found";
+        const div = document.createElement('div');
+        div.classList.add('col-md-3');
+        
+        div.innerHTML = `
+        <div class="rounded overflow-hidden border p-2">
+      <img
+        src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg"
+        class="w-100"
+        alt=""
+      />
+    </div>
     
-                <div class="card h-100 shadow-lg rounded">
-                    <img src="${bookImgUrl}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Book Name:${title}</h5>
-                        <p><span class="fw-bold">Author:</span> ${author_name ? author_name : unknown}</p>
-                        <p><span class="fw-bold">First Publish Year:</span> ${first_publish_year}</p>
-                        <p><span class="fw-bold">Publisher:</span> ${publisher}</p>
-                        <p class="card-text"></p>
-                    </div>
-                </div>
-            
-            `
-        booksContainer.appendChild(booksDiv)
-
+    <div
+      class="
+        py-2
+        d-flex
+        justify-content-between
+        align-items-center
+        d-md-block
+        text-md-center
+      "
+    >
+      <h5>Book-name: <span class="text-info">${title?title:notFound}</span></h5>
+      <p>Author-name: <span class="text-info">${author_name?author_name:notFound}</span> </p>
+      <h5>Publish-year: <span class="text-info">${first_publish_year?first_publish_year:notFound}</span></h5>
+      <p>Publisher: <span class="text-info">${publisher?publisher:notFound}</span></p>
+    </div>
+  `
+  bookContainer.appendChild(div)
     })
-
-}
+  
+  }
