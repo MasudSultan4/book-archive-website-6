@@ -53,13 +53,12 @@ const displayBook = books => {
         text-md-center
       "
     >
-      <h5>Book-name: ${book.title}</h5>
-      <p>Author-name: ${book.author_name[0]}</p>
-      <h5>Publish-year: ${book.first_publish_year}</h5>
-      <p>Publisher: ${book.publisher}</p>
-      <button onclick="countryDetails('${book.key}')" class="btn btn-dark">Learn More</button>
+      <h5>Book-name: <span class="text-info">${book.title}</span></h5>
+      <p>Author-name: <span class="text-info">${book.author_name[0]}</span> </p>
+      <h5>Publish-year: <span class="text-info">${book.first_publish_year}</span></h5>
+      <p>Publisher: <span class="text-info">${book.publisher}</span></p>
     </div>
   `
   bookContainer.appendChild(div)
-     })
+    })
 }
