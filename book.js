@@ -19,7 +19,6 @@ const spinner = document.getElementById('spinner');
         document.getElementById('displayField').textContent = ''
     }
     inputValue.value = ''
-    document.getElementById('countResult').innerText = '';
 }
 
 // This Function Show Data in UI
